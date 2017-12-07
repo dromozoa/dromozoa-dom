@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>実装メモ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<style>
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid;
+}
+</style>
+<body>
+
+<h1>実装メモ</h1>
+
+<h2>リンク</h2>
+
+<ul>
+  <li>Extensible Markup Language (XML) 1.0 (Fifth Edition)
+    <ul>
+      <li><a href="https://www.w3.org/TR/xml/#d0e804">Names and Tokens</a></li>
+    </ul>
+  </li>
+  <li>MicroXML
+    <ul>
+      <li><a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#names">Names</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Names and Tokens</h2>
+
+<pre>
+NameStartChar ::=
+    #x003A          ; ":"
+  | [#x0041-#x005A] ; [A-Z]
+  | #x005F          ; "_"
+  | [#x0061-#x007A] ; [a-z]
+  | [#x00C0-#x00D6]
+  | [#x00D8-#x00F6]
+  | [#x00F8-#x02FF]
+  | [#x0370-#x037D]
+  | [#x037F-#x1FFF]
+  | [#x200C-#x200D]
+  | [#x2070-#x218F]
+  | [#x2C00-#x2FEF]
+  | [#x3001-#xD7FF]
+  | [#xF900-#xFDCF]
+  | [#xFDF0-#xFFFD]
+  | [#x010000-#x0EFFFF]
+NameChar ::=
+    NameStartChar
+  | #x002D          ; "-"
+  | #x002E          ; "."
+  | [#x0030-#x0039] ; [0-9]
+  | #x00B7
+  | [#x0300-#x036F]
+  | [#x203F-#x2040]
+</pre>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  CommonHTML: {
+    undefinedFamily: "sans-serif"
+  }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</body>
+</html>
