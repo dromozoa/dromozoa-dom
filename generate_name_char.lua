@@ -15,6 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
+local dumper = require "dromozoa.commons.dumper"
+
 local unpack = table.unpack or unpack
 
 local name_start_char = [[
@@ -130,7 +132,7 @@ local function process(source, code_filename, test_filename)
   ranges[n] = { first = first, value = value }
 
   local m = #ranges - 1
-  local n = math.ceil(math.log(m) / math.log(2)) - 1
+  local n = math.ceil(math.log(m + 1) / math.log(2)) - 1
 
   local indice = {}
   for i = 1, m do
@@ -142,6 +144,7 @@ local function process(source, code_filename, test_filename)
     local j = 2^i
     local k = 1
     local index = indice[k]
+
     while index and j <= m do
       tree[j] = ranges[index + 1].first
       table.remove(indice, k)

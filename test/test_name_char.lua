@@ -35,11 +35,10 @@ local function check(f, expect_filename)
   end
 
   for i = 0, 0x10FFFF do
-    print(i, f(i), expect[i])
     assert(f(i) == expect[i])
   end
 end
 
 check(name_start_char, "test/test_name_start_char.txt")
--- check(name_char, "test/test_name_char.txt")
+check(name_char, "test/test_name_char.txt")
 
