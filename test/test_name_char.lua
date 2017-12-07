@@ -15,8 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local name_char = require "dromozoa.dom.name_char"
-local name_start_char = require "dromozoa.dom.name_start_char"
+local is_name_char = require "dromozoa.dom.is_name_char"
+local is_name_start_char = require "dromozoa.dom.is_name_start_char"
 
 local function check(f, expect_filename)
   local expect = {}
@@ -39,6 +39,5 @@ local function check(f, expect_filename)
   end
 end
 
-check(name_start_char, "test/test_name_start_char.txt")
-check(name_char, "test/test_name_char.txt")
-
+check(is_name_start_char, "test/name_start_char.txt")
+check(is_name_char, "test/name_char.txt")
