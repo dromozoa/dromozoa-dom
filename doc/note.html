@@ -25,6 +25,11 @@ th, td {
       <li><a href="https://www.w3.org/TR/xml/#d0e804">Names and Tokens</a></li>
     </ul>
   </li>
+  <li>Extensible Markup Language (XML) 1.1 (Second Edition)
+    <ul>
+      <li><a href="https://www.w3.org/TR/2006/REC-xml11-20060816/#IDAKUDS">Names and Tokens</a></li>
+    </ul>
+  </li>
   <li>MicroXML
     <ul>
       <li><a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#names">Names</a></li>
@@ -34,33 +39,11 @@ th, td {
 
 <h2>Names and Tokens</h2>
 
-<pre>
-NameStartChar ::=
-    #x003A          ; ":"
-  | [#x0041-#x005A] ; [A-Z]
-  | #x005F          ; "_"
-  | [#x0061-#x007A] ; [a-z]
-  | [#x00C0-#x00D6]
-  | [#x00D8-#x00F6]
-  | [#x00F8-#x02FF]
-  | [#x0370-#x037D]
-  | [#x037F-#x1FFF]
-  | [#x200C-#x200D]
-  | [#x2070-#x218F]
-  | [#x2C00-#x2FEF]
-  | [#x3001-#xD7FF]
-  | [#xF900-#xFDCF]
-  | [#xFDF0-#xFFFD]
-  | [#x010000-#x0EFFFF]
-NameChar ::=
-    NameStartChar
-  | #x002D          ; "-"
-  | #x002E          ; "."
-  | [#x0030-#x0039] ; [0-9]
-  | #x00B7
-  | [#x0300-#x036F]
-  | [#x203F-#x2040]
-</pre>
+<div>
+XML 1.0とXML 1.1のNameStartChar, NameCharは等しい。
+MicroXMLのnameStartChar, nameCharは名前空間を取りのぞくために":"を持たない。
+このほかに、nonCharacterCodePointの除外によっていくつかのコードポイントを除外している。
+</div>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
