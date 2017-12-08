@@ -39,5 +39,5 @@ local function check(f, expect_filename)
   end
 end
 
-check(is_name_start_char, "test/is_name_start_char.txt")
-check(is_name_char, "test/is_name_char.txt")
+check(is_name_start_char, "test/test_is_name_start_char.txt")
+check(is_name_char, "test/test_is_name_char.txt")
