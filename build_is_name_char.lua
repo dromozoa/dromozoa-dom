@@ -90,8 +90,8 @@ end
 process(
     name_start_char,
     "dromozoa/dom/is_name_start_char.lua",
-    "test/name_start_char.txt")
+    "test/is_name_start_char.txt")
 process(
     name_char,
     "dromozoa/dom/is_name_char.lua",
-    "test/name_char.txt")
+    "test/is_name_char.txt")

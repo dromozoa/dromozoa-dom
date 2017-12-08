@@ -23,11 +23,11 @@ return function (name)
   for p, c in utf8.codes(name) do
     if p == 1 then
       if not is_name_start_char(c) then
-        error("invalid name at position " .. p)
+        error(("invalid character #x%X at position %d"):format(c, p))
       end
     else
       if not is_name_char(c) then
-        error("invalid name at position " .. p)
+        error(("invalid character #x%X at position %d"):format(c, p))
       end
     end
   end
