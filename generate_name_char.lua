@@ -66,9 +66,16 @@ local function make_code(tree, code, i, depth)
   elseif type(v) == "number" then
     code[#code + 1] = indent .. ("if c < %d then\n"):format(u)
     make_code(tree, code, j, depth)
-    code[#code + 1] = indent .. ("else return %s end\n"):format(w)
+    code[#code + 1] = indent .. ("else\n")
+    code[#code + 1] = indent .. ("  return %s\n"):format(w)
+    code[#code + 1] = indent .. ("end\n")
   else
-    code[#code + 1] = indent .. ("if c < %d then return %s else return %s end\n"):format(u, v, w)
+    if v == true and w == false then
+      code[#code + 1] = indent .. ("return c < %d\n"):format(u)
+    else
+      code[#code + 1] = indent .. ("return c >= %d\n"):format(u)
+      -- code[#code + 1] = indent .. ("if c < %d then return %s else return %s end\n"):format(u, v, w)
+    end
   end
 end
 

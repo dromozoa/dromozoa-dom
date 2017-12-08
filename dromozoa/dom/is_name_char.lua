@@ -4,38 +4,40 @@ return function (c)
       if c < 96 then
         if c < 59 then
           if c < 47 then
-            if c < 45 then return false else return true end
+            return c >= 45
           else
-            if c < 48 then return false else return true end
+            return c >= 48
           end
         else
           if c < 91 then
-            if c < 65 then return false else return true end
+            return c >= 65
           else
-            if c < 95 then return false else return true end
+            return c >= 95
           end
         end
       else
         if c < 183 then
           if c < 123 then
-            if c < 97 then return false else return true end
-          else return false end
+            return c >= 97
+          else
+            return false
+          end
         else
-          if c < 184 then return true else return false end
+          return c < 184
         end
       end
     else
       if c < 248 then
         if c < 216 then
-          if c < 215 then return true else return false end
+          return c < 215
         else
-          if c < 247 then return true else return false end
+          return c < 247
         end
       else
         if c < 895 then
-          if c < 894 then return true else return false end
+          return c < 894
         else
-          if c < 8192 then return true else return false end
+          return c < 8192
         end
       end
     end
@@ -43,29 +45,29 @@ return function (c)
     if c < 12289 then
       if c < 8304 then
         if c < 8255 then
-          if c < 8206 then return true else return false end
+          return c < 8206
         else
-          if c < 8257 then return true else return false end
+          return c < 8257
         end
       else
         if c < 11264 then
-          if c < 8592 then return true else return false end
+          return c < 8592
         else
-          if c < 12272 then return true else return false end
+          return c < 12272
         end
       end
     else
       if c < 65008 then
         if c < 63744 then
-          if c < 55296 then return true else return false end
+          return c < 55296
         else
-          if c < 64976 then return true else return false end
+          return c < 64976
         end
       else
         if c < 65536 then
-          if c < 65534 then return true else return false end
+          return c < 65534
         else
-          if c < 983040 then return true else return false end
+          return c < 983040
         end
       end
     end
