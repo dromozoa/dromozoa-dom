@@ -1,4 +1,5 @@
 return function (c)
+  c = c + 0
   if c < 895 then
     if c < 192 then
       if c < 95 then
