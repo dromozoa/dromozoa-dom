@@ -80,11 +80,10 @@ local function process(source, code_filename, test_filename)
   end
   out:close()
 
-  local code = _.compile(_:build())
+  local data = _:build()
 
   local out = assert(io.open(code_filename, "w"))
-  out:write(unpack(code))
-  out:close()
+  _.compile(out, data):close()
 end
 
 process(
