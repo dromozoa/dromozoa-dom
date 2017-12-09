@@ -69,8 +69,7 @@ local function serialize_html5(out, u)
   out:write("<", name)
   for i = 1, n do
     local k = keys[i]
-    local v = u[k]:gsub("[&\"]", escape_table):gsub(nbsp, "&nbsp;")
-    out:write(" ", k, "=\"", v, "\"")
+    out:write(" ", k, "=\"", (u[k]:gsub("[&\"]", escape_table):gsub(nbsp, "&nbsp;")), "\"")
   end
   out:write(">")
 
