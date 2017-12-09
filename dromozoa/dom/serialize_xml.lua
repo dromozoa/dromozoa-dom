@@ -22,27 +22,7 @@ local escape_table = {
   [">"] = "&gt;";
 }
 
-local nbsp = string.char(0xC2, 0xA0) -- U+00A0 NO-BREAK SPACE
-
-local void_elements = {
-  area = true;
-  base = true;
-  br = true;
-  col = true;
-  embed = true;
-  hr = true;
-  img = true;
-  input = true;
-  keygen = true; -- removed from HTML 5.2
-  link = true;
-  meta = true;
-  param = true;
-  source = true;
-  track = true;
-  wbr = true;
-}
-
-local function serialize_html5(out, u)
+local function serialize_xml(out, u)
   local name = u[0]
 
   local keys = {}
@@ -66,32 +46,34 @@ local function serialize_html5(out, u)
     local k = keys[i]
     local v = u[k]
     if v == true then
-      out:write(" ", k)
+      out:write(" ", k, "=\"\"")
     else
       local t = type(v)
       if t == "number" then
         out:write(" ", k, "=\"", ("%.17g"):format(v), "\"")
       elseif t == "string" then
-        out:write(" ", k, "=\"", (v:gsub("[&\"]", escape_table):gsub(nbsp, "&nbsp;")), "\"")
+        out:write(" ", k, "=\"", (v:gsub("[&\"<>]", escape_table)), "\"")
       end
     end
   end
-  out:write(">")
 
-  if not void_elements[name] then
+  if m == 0 then
+    out:write("/>")
+  else
+    out:write(">")
     for i = 1, m do
       local v = u[i]
       local t = type(v)
       if t == "number" then
         out:write(("%.17g"):format(v))
       elseif t == "string" then
-        out:write((v:gsub("[&<>]", escape_table):gsub(nbsp, "&nbsp;")))
+        out:write((v:gsub("[&<>]", escape_table)))
       elseif t == "table" then
-        serialize_html5(out, v)
+        serialize_xml(out, v)
       end
     end
     out:write("</", name, ">")
   end
 end
 
-return serialize_html5
+return serialize_xml

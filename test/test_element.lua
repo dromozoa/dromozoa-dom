@@ -15,22 +15,35 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local dumper = require "dromozoa.commons.dumper"
 local element = require "dromozoa.dom.element"
 local serialize_html5 = require "dromozoa.dom.serialize_html5"
+local serialize_xml = require "dromozoa.dom.serialize_xml"
 
 local _ = element
 
-local div = _"div" {
-  class = "foo bar & baz";
-  style = "display: box; border: 1px solid black";
-  "foo";
-  _"a" { href="https://gihub.com/dromozoa/dromozoa-dom/"; "bar" };
-  "baz";
+local root = _"html" {
+  _"head" {
+    _"meta" { charset = "UTF-8" };
+  };
+  _"body" {
+    _"div" {
+      class = "foo bar & baz";
+      style = "display: box; border: 1px solid black";
+      "foo";
+      _"a" { href="https://gihub.com/dromozoa/dromozoa-dom/"; "bar" };
+      "baz";
+      _"input" { type = "text", disabled = true, value = 2.0 };
+    };
+  };
 }
+
+local div = root[2][1]
 div[#div + 1] = _"span" { "qux" }
 
 assert(not pcall(function () div["invalid name"] = 42 end))
 
-serialize_html5(io.stdout, div)
+serialize_html5(io.stdout, root)
+io.write("\n")
+
+serialize_xml(io.stdout, root)
 io.write("\n")
