@@ -15,7 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
--- https://www.w3.org/TR/html52/syntax.html#escaping-a-string
 local escape_table = {
   ["&"] = "&amp;";
   ["\""] = "&quot;";
@@ -23,12 +22,8 @@ local escape_table = {
   [">"] = "&gt;";
 }
 
--- U+00A0 NO-BREAK SPACE
-local nbsp = string.char(0xC2, 0xA0)
+local nbsp = string.char(0xC2, 0xA0) -- U+00A0 NO-BREAK SPACE
 
--- https://www.w3.org/TR/html5/syntax.html#void-elements
--- https://www.w3.org/TR/html51/syntax.html#void-elements
--- https://www.w3.org/TR/html52/syntax.html#void-elements
 local void_elements = {
   area = true;
   base = true;
