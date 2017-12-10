@@ -15,21 +15,29 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
 local is_name_char = require "dromozoa.dom.is_name_char"
 local is_name_start_char = require "dromozoa.dom.is_name_start_char"
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
+local function check(f, expect_filename)
+  local expect = {}
+
+  for i = 0, 0x10FFFF do
+    expect[i] = false
+  end
+
+  for line in io.lines(expect_filename) do
+    local first, last = assert(line:match("^(%d+)\t(%d+)$"))
+    first = tonumber(first)
+    last = tonumber(last)
+    for i = first, last do
+      expect[i] = true
     end
   end
-  return name
+
+  for i = 0, 0x10FFFF do
+    assert(f(i) == expect[i])
+  end
 end
+
+check(is_name_start_char, "test/test_is_name_start_char.txt")
+check(is_name_char, "test/test_is_name_char.txt")

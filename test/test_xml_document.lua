@@ -15,21 +15,26 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local element = require "dromozoa.dom.element"
+local xml_document = require "dromozoa.dom.xml_document"
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    end
-  end
-  return name
-end
+local _ = element
+local doc = xml_document(_"svg" {
+  version = "1.1";
+  width = 600;
+  height = 600;
+  xmlns = "http://www.w3.org/2000/svg";
+  _"circle" {
+    cx = 300;
+    cy = 300;
+    r = 100;
+  };
+})
+-- doc.doctype = {
+--   name = "svg";
+--   public_id = "-//W3C//DTD SVG 1.1//EN";
+--   system_id = "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd";
+-- }
+
+doc:serialize(io.stdout)
+io.write("\n")

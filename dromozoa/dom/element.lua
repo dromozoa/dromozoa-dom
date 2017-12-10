@@ -15,21 +15,27 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local check_name = require "dromozoa.dom.check_name"
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    end
+local class = {}
+local metatable = { __index = class }
+
+function metatable:__newindex(k, v)
+  if type(k) == "string" then
+    check_name(k)
   end
-  return name
+  rawset(self, k, v)
 end
+
+function metatable:__call(t)
+  for k, v in pairs(t) do
+    self[k] = v
+  end
+  return self
+end
+
+return setmetatable(class, {
+  __call = function (_, name)
+    return setmetatable({ [0] = check_name(name) }, metatable)
+  end;
+})

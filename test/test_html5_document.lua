@@ -15,21 +15,22 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local element = require "dromozoa.dom.element"
+local html5_document = require "dromozoa.dom.html5_document"
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    end
-  end
-  return name
-end
+local _ = element
+local doc = html5_document(_"html" {
+  _"head" {
+    _"meta" { charset = "UTF-8" };
+    _"title" { "タイトル" };
+  };
+  _"body" {
+    _"h1" { "見出し1" };
+    _"div" { "本文1" };
+    _"div" { "本文2" };
+    _"div" { "本文3" };
+  };
+})
+
+doc:serialize(io.stdout)
+io.write("\n")

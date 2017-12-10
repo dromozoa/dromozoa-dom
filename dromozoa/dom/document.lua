@@ -15,21 +15,25 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local class = {}
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
+function class:serialize_doctype(out)
+  local doctype = self.doctype
+  if doctype then
+    out:write("<!DOCTYPE ", doctype.name)
+    local public_id = doctype.public_id
+    local system_id = doctype.system_id
+    if public_id then
+      out:write(" PUBLIC \"", public_id, "\"")
     end
+    if system_id then
+      if not public_id then
+        out:write(" SYSTEM")
+      end
+      out:write(" \"", system_id, "\"")
+    end
+    out:write(">")
   end
-  return name
 end
+
+return class

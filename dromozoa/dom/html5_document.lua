@@ -15,21 +15,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local document = require "dromozoa.dom.document"
+local serialize_html5 = require "dromozoa.dom.serialize_html5"
 
-return function (name)
-  for p, c in utf8.codes(name) do
-    if p == 1 then
-      if not is_name_start_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    else
-      if not is_name_char(c) then
-        error(("invalid character #x%X at position %d"):format(c, p))
-      end
-    end
-  end
-  return name
+local super = document
+local class = {}
+local metatable = { __index = class }
+
+function class:serialize(out)
+  self:serialize_doctype(out)
+  serialize_html5(out, self[1])
 end
+
+return setmetatable(class, {
+  __index = super;
+  __call = function (_, root)
+    return setmetatable({ doctype = { name = "html" }, root }, metatable)
+  end;
+})

@@ -15,29 +15,22 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local is_name_char = require "dromozoa.dom.is_name_char"
-local is_name_start_char = require "dromozoa.dom.is_name_start_char"
+local document = require "dromozoa.dom.document"
+local serialize_xml = require "dromozoa.dom.serialize_xml"
 
-local function check(f, expect_filename)
-  local expect = {}
+local super = document
+local class = {}
+local metatable = { __index = class }
 
-  for i = 0, 0x10FFFF do
-    expect[i] = false
-  end
-
-  for line in io.lines(expect_filename) do
-    local first, last = assert(line:match("^(%d+)\t(%d+)$"))
-    first = tonumber(first)
-    last = tonumber(last)
-    for i = first, last do
-      expect[i] = true
-    end
-  end
-
-  for i = 0, 0x10FFFF do
-    assert(f(i) == expect[i])
-  end
+function class:serialize(out)
+  out:write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+  self:serialize_doctype(out)
+  serialize_xml(out, self[1])
 end
 
-check(is_name_start_char, "test/name_start_char.txt")
-check(is_name_char, "test/name_char.txt")
+return setmetatable(class, {
+  __index = super;
+  __call = function (_, root)
+    return setmetatable({ root }, metatable)
+  end;
+})
