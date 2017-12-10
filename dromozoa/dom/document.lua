@@ -15,22 +15,25 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local document = require "dromozoa.dom.document"
-local serialize_xml = require "dromozoa.dom.serialize_xml"
-
-local super = document
 local class = {}
-local metatable = { __index = class }
 
-function class:serialize(out)
-  out:write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-  self:serialize_doctype(out)
-  serialize_xml(out, self[1])
+function class:serialize_doctype(out)
+  local doctype = self.doctype
+  if doctype then
+    out:write("<!DOCTYPE ", doctype.name)
+    local public_id = doctype.public_id
+    local system_id = doctype.system_id
+    if public_id then
+      out:write(" PUBLIC \"", public_id, "\"")
+    end
+    if system_id then
+      if not public_id then
+        out:write(" SYSTEM")
+      end
+      out:write(" \"", system_id, "\"")
+    end
+    out:write(">")
+  end
 end
 
-return setmetatable(class, {
-  __index = super;
-  __call = function (_, root)
-    return setmetatable({ root }, metatable)
-  end;
-})
+return class

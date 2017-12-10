@@ -15,18 +15,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
+local document = require "dromozoa.dom.document"
 local serialize_html5 = require "dromozoa.dom.serialize_html5"
 
+local super = document
 local class = {}
 local metatable = { __index = class }
 
 function class:serialize(out)
-  out:write("<!DOCTYPE html>")
-  serialize_html5(out, self.document_element)
+  self:serialize_doctype(out)
+  serialize_html5(out, self[1])
 end
 
 return setmetatable(class, {
-  __call = function (_, document_element)
-    return setmetatable({ document_element = document_element }, metatable)
+  __index = super;
+  __call = function (_, root)
+    return setmetatable({ doctype = { name = "html" }, root }, metatable)
   end;
 })
