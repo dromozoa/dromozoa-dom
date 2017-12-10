@@ -10,6 +10,9 @@ description = {
   homepage = "https://github.com/dromozoa/dromozoa-dom/";
   maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
 }
+dependencies = {
+  "dromozoa-utf8";
+}
 build = {
   type = "builtin";
   modules = {
