@@ -66,6 +66,11 @@ function class:T(x, y)
   return self
 end
 
+function class:A(rx, ry, r_axis_rotation, large_arc_flag, sweep_flag, x, y)
+  self[#self + 1] = { "A", rx, ry, r_axis_rotation, large_arc_flag, sweep_flag, x, y }
+  return self
+end
+
 function metatable:__tostring()
   local buffer = {}
   for i = 1, #self do

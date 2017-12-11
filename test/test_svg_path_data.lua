@@ -73,6 +73,11 @@ local doc = xml_document(_"svg" {
     stroke = "#333";
     ["stroke-dasharray"] = "2";
   };
+  _"path" {
+    d = path_data():M(100, 400):L(200, 400):A(100, 100, 0, 0, 0, 100, 300);
+    fill = "none";
+    stroke = "#333";
+  };
 })
 doc:serialize(io.stdout)
 io.write("\n")
