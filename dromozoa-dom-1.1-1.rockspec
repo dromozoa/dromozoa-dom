@@ -1,14 +1,17 @@
 package = "dromozoa-dom"
-version = "1.0-1"
+version = "1.1-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.0.tar.gz";
-  file = "dromozoa-dom-1.0.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.1.tar.gz";
+  file = "dromozoa-dom-1.1.tar.gz";
 }
 description = {
   summary = "DOM DSL and serialization";
   license = "GPL-3";
   homepage = "https://github.com/dromozoa/dromozoa-dom/";
   maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
+}
+dependencies = {
+  "dromozoa-utf8";
 }
 build = {
   type = "builtin";
