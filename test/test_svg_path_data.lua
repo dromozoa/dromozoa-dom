@@ -78,6 +78,11 @@ local doc = xml_document(_"svg" {
     fill = "none";
     stroke = "#333";
   };
+  _"path" {
+    d = path_data():M(250, 400):L(350, 400);
+    fill = "none";
+    stroke = "#c00";
+  };
 })
 doc:serialize(io.stdout)
 io.write("\n")

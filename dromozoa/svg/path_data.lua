@@ -104,11 +104,21 @@ end
 
 function metatable:__tostring()
   local buffer = {}
+  local prev_command
   for i = 1, #self do
     local segment = self[i]
     local command = segment[1]
     local format = command_defs[command:upper()][2]
-    buffer[i] = format:format(unpack(segment))
+    if command == prev_command then
+      buffer[i] = format:format("", unpack(segment, 2))
+    else
+      buffer[i] = format:format(unpack(segment))
+      if command == "Z" or command == "z" then
+        prev_command = nil
+      else
+        prev_command = command
+      end
+    end
   end
   return table.concat(buffer, " ")
 end
