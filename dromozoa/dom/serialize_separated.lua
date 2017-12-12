@@ -15,20 +15,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local serialize_separated = require "dromozoa.dom.serialize_separated"
-
-local class = {}
-local metatable = {
-  __index = class;
-  ["dromozoa.dom.is_serializable"] = true;
-}
-
-function metatable:__tostring()
-  return serialize_separated(self, " ")
+return function (self, sep)
+  local buffer = {}
+  for i = 1, #self do
+    local v = self[i]
+    local t = type(v)
+    if t == "number" then
+      buffer[i] = ("%.17g"):format(v)
+    elseif t == "string" then
+      buffer[i] = v
+    elseif t == "table" then
+      local metatable = getmetatable(v)
+      if metatable and metatable["dromozoa.dom.is_serializable"] then
+        buffer[i] = tostring(v)
+      end
+    end
+  end
+  return table.concat(buffer, sep)
 end
-
-return setmetatable(class, {
-  __call = function (_, self)
-    return setmetatable(self, metatable)
-  end;
-})

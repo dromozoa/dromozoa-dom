@@ -24,7 +24,7 @@ local metatable = {
 }
 
 function metatable:__tostring()
-  return serialize_separated(self, " ")
+  return serialize_separated(self, ",")
 end
 
 return setmetatable(class, {

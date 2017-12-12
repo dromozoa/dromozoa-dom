@@ -15,6 +15,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
+local comma_separated = require "dromozoa.dom.comma_separated"
 local element = require "dromozoa.dom.element"
 local space_separated = require "dromozoa.dom.space_separated"
 local xml_document = require "dromozoa.dom.xml_document"
@@ -73,6 +74,8 @@ local doc = xml_document(_"svg" {
     stroke = "#f00";
     ["stroke-width"] = 4;
     ["marker-end"] = "url(#arrow)";
+    ["data-ss"] = space_separated { "foo", "bar", "baz" };
+    ["data-cs"] = comma_separated { "foo", "bar", "baz" };
   };
 })
 doc:serialize(io.stdout)
