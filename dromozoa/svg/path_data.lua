@@ -124,7 +124,6 @@ function metatable:__tostring()
 end
 
 return setmetatable(class, {
-  __tostring = tostring;
   __call = function (_, name)
     return setmetatable({}, metatable)
   end;
