@@ -15,67 +15,100 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
+local unpack = table.unpack or unpack
+
+local commands = {
+  -- x,y
+  M = { 3, "%s%.17g,%.17g" };
+  --
+  Z = { 1, "%s" };
+  -- x,y
+  L = { 3, "%s%.17g,%.17g" };
+  -- x
+  H = { 2, "%s%.17g" };
+  -- y
+  V = { 2, "%s%.17g" };
+  -- x1,y1 x2,y2 x,y
+  C = { 7, "%s%.17g,%.17g %.17g,%.17g %.17g,%.17g" };
+  -- x2,y2 x,y
+  S = { 5, "%s%.17g,%.17g %.17g,%.17g" };
+  -- x1,y1 x,y
+  Q = { 5, "%s%.17g,%.17g %.17g,%.17g" };
+  -- x,y
+  T = { 3, "%s%.17g,%.17g" };
+  -- rx,ry r_axis_rotation large_arc_flag,sweep_flag x,y
+  A = { 8, "%s%.17g,%.17g %.17g %d,%d %.17g,%.17g" };
+}
+
+local function make_segment(command, n, ...)
+  local segment = { command, ... }
+  for i = 2, n do
+    local v = segment[i]
+    local t = type(v)
+    if t ~= "number" then
+      if t == "string" then
+        v = tonumber(v)
+        if not v then
+          error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
+        end
+      else
+        error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
+      end
+    end
+    segment[i] = v
+  end
+  return segment
+end
+
+local function make_command(command, n)
+  if command == "A" or command == "a" then
+    return function (self, ...)
+      local segment = make_segment(command, n, ...)
+      if segment[2] < 0 then
+        error("bad argument #2 (rx must be non-negative)")
+      end
+      if segment[3] < 0 then
+        error("bad argument #3 (ry must be non-negative)")
+      end
+      local flag = segment[5]
+      if flag ~= 0 and flag ~= 1 then
+        error("bad argument #5 (large_arc_flag must be 0 or 1)")
+      end
+      local flag = segment[6]
+      if flag ~= 0 and flag ~= 1 then
+        error("bad argument #6 (sweep_flag must be 0 or 1)")
+      end
+      self[#self + 1] = segment
+      return self
+    end
+  else
+    return function (self, ...)
+      self[#self + 1] = make_segment(command, n, ...)
+      return self
+    end
+  end
+end
+
 local class = {}
 local metatable = {
   __index = class;
   ["dromozoa.dom.is_serializable"] = true;
 }
 
-function class:M(x, y)
-  self[#self + 1] = { "M", x, y }
-  return self
-end
-
-function class:Z()
-  self[#self + 1] = { "Z" }
-  return self
-end
-
-function class:L(x, y)
-  self[#self + 1] = { "L", x, y }
-  return self
-end
-
-function class:H(x)
-  self[#self + 1] = { "H", x }
-  return self
-end
-
-function class:V(y)
-  self[#self + 1] = { "V", y }
-  return self
-end
-
-function class:C(x1, y1, x2, y2, x, y)
-  self[#self + 1] = { "C", x1, y1, x2, y2, x, y }
-  return self
-end
-
-function class:S(x2, y2, x, y)
-  self[#self + 1] = { "S", x2, y2, x, y }
-  return self
-end
-
-function class:Q(x1, y1, x, y)
-  self[#self + 1] = { "Q", x1, y1, x, y }
-  return self
-end
-
-function class:T(x, y)
-  self[#self + 1] = { "T", x, y }
-  return self
-end
-
-function class:A(rx, ry, r_axis_rotation, large_arc_flag, sweep_flag, x, y)
-  self[#self + 1] = { "A", rx, ry, r_axis_rotation, large_arc_flag, sweep_flag, x, y }
-  return self
+for command_abs, def in pairs(commands) do
+  local command_rel = command_abs:lower()
+  local n = def[1]
+  class[command_abs] = make_command(command_abs, n)
+  class[command_rel] = make_command(command_rel, n)
 end
 
 function metatable:__tostring()
   local buffer = {}
   for i = 1, #self do
-    local data = self[i]
-    buffer[i] = data[1] .. table.concat(data, ",", 2)
+    local segment = self[i]
+    local command = segment[1]
+    local format = commands[command:upper()][2]
+    buffer[i] = format:format(unpack(segment))
   end
   return table.concat(buffer, " ")
 end
