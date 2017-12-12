@@ -17,7 +17,7 @@
 
 local unpack = table.unpack or unpack
 
-local commands = {
+local command_defs = {
   -- x,y
   M = { 3, "%s%.17g,%.17g" };
   --
@@ -95,7 +95,7 @@ local metatable = {
   ["dromozoa.dom.is_serializable"] = true;
 }
 
-for command_abs, def in pairs(commands) do
+for command_abs, def in pairs(command_defs) do
   local command_rel = command_abs:lower()
   local n = def[1]
   class[command_abs] = make_command(command_abs, n)
@@ -107,7 +107,7 @@ function metatable:__tostring()
   for i = 1, #self do
     local segment = self[i]
     local command = segment[1]
-    local format = commands[command:upper()][2]
+    local format = command_defs[command:upper()][2]
     buffer[i] = format:format(unpack(segment))
   end
   return table.concat(buffer, " ")
