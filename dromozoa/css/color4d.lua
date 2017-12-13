@@ -22,33 +22,28 @@ local metatable = {
 }
 
 function metatable:__tostring()
-  local r = self[1]
-  local g = self[2]
-  local b = self[3]
+  local r = self[1] * 255
+  local g = self[2] * 255
+  local b = self[3] * 255
   local a = self[4]
-
-  local x = r * 255
-  local y = g * 255
-  local z = b * 255
-
-  if a == 1 then
-    local x = r * 255
-    local y = g * 255
-    local z = b * 255
-    if x % 1 == 0 and y % 1 == 0 and z % 1 == 0 then
-      if x % 17 == 0 and y % 17 == 0 and z % 17 == 0 then
-        return ("#%01X%01X%01X"):format(x / 17, y / 17, z / 17)
+  if r % 1 == 0 and g % 1 == 0 and b % 1 == 0 then
+    if a == 1 then
+      if r % 17 == 0 and g % 17 == 0 and b % 17 == 0 then
+        return ("#%01X%01X%01X"):format(r / 17, g / 17, b / 17)
       else
-        return ("#%02X%02X%02X"):format(x, y, z)
+        return ("#%02X%02X%02X"):format(r, g, b)
       end
     else
-      return ("rgb(%.17g%%,%.17g%%,%.17g%%)"):format(r * 100, g * 100, b * 100)
+      return ("rgba(%d,%d,%d,%.17g)"):format(r, g, b, a)
     end
   else
-    if x % 1 == 0 and y % 1 == 0 and z % 1 == 0 then
-      return ("rgba(%d,%d,%d,%.17g)"):format(x, y, z, a / 255)
+    local r = self[1] * 100
+    local g = self[2] * 100
+    local b = self[3] * 100
+    if a == 1 then
+      return ("rgb(%.17g%%,%.17g%%,%.17g%%)"):format(r, g, b)
     else
-      return ("rgba(%.17g%%,%.17g%%,%.17g%%,%.17g)"):format(r * 100, g * 100, b * 100, a)
+      return ("rgba(%.17g%%,%.17g%%,%.17g%%,%.17g)"):format(r, g, b, a)
     end
   end
 end

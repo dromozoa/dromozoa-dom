@@ -21,9 +21,6 @@ local color4d = require "dromozoa.css.color4d"
 assert(tostring(color4b(0xFF, 0xFF, 0x00, 127.5)) == "rgba(255,255,0,0.5)")
 assert(tostring(color4b(255, 127, 63)) == "#FF7F3F")
 assert(tostring(color4b(255, 34, 0)) == "#F20")
-
-print(tostring(color4d(1, 0, 0x33/0xFF)))
-print(tostring(color4d(1, 0.5, 0.25)))
-print(tostring(color4d(1, 0.5, 0.25, 0.75)))
-
-
+assert(tostring(color4d(1, 0, 0x33/0xFF)) == "#F03")
+assert(tostring(color4d(1, 0.5, 0.25)) == "rgb(100%,50%,25%)")
+assert(tostring(color4d(1, 0.5, 0.25, 0.75)) == "rgba(100%,50%,25%,0.75)")
