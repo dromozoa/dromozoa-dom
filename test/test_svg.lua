@@ -19,11 +19,13 @@ local comma_separated = require "dromozoa.dom.comma_separated"
 local element = require "dromozoa.dom.element"
 local space_separated = require "dromozoa.dom.space_separated"
 local xml_document = require "dromozoa.dom.xml_document"
+local color4d = require "dromozoa.css.color4d"
 local path_data = require "dromozoa.svg.path_data"
 
 local _ = element
 
 local s = 1 / math.sqrt(10)
+local c = color4d(1, 0, 0, 0.25)
 
 local doc = xml_document(_"svg" {
   version = "1.1";
@@ -39,7 +41,7 @@ local doc = xml_document(_"svg" {
       orient = "auto";
       _"path" {
         d = path_data():M(0,0):L(0,2):L(2,1):Z();
-        fill = "rgba(255,0,0,0.25)";
+        fill = color4d(1, 0, 0, 0.25);
         stroke = "none";
       };
     };
@@ -54,27 +56,27 @@ local doc = xml_document(_"svg" {
   _"path" {
     d = path_data():M(100, 100):L(150, 250):L(350, 250);
     fill = "none";
-    stroke = "rgba(0,255,0,0.25)";
+    stroke = color4d(0, 1, 0, 0.25);
     ["stroke-width"] = 5;
   };
   _"path" {
     d = path_data():M(350, 250):S(150, 250, 100 + 15 * s, 100 + 15 * 3 * s);
     fill = "none";
-    stroke = "rgba(255,0,0,0.25)";
+    stroke = color4d(1, 0, 0, 0.25);
     ["stroke-width"] = 5;
     ["marker-end"] = "url(#triangle)";
   };
   _"path" {
     d = path_data():M(350, 250):S(150, 250, 100 + 115 * s, 100 + 115 * 3 * s);
     fill = "none";
-    stroke = "rgba(255,0,0,0.25)";
+    stroke = color4d(1, 0, 0, 0.25);
     ["stroke-width"] = 5;
     ["marker-end"] = "url(#triangle)";
   };
   _"path" {
     d = path_data():M(350, 250):L(50 + 50 / s, 250):S(150, 250, 100 + 115 * s, 100 + 115 * 3 * s);
     fill = "none";
-    stroke = "rgba(255,0,0,0.25)";
+    stroke = color4d(1, 0, 0, 0.25);
     ["stroke-width"] = 5;
     ["marker-end"] = "url(#triangle)";
   };
