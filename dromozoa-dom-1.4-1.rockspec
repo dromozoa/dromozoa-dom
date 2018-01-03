@@ -1,8 +1,8 @@
 package = "dromozoa-dom"
-version = "1.3-1"
+version = "1.4-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.3.tar.gz";
-  file = "dromozoa-dom-1.3.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.4.tar.gz";
+  file = "dromozoa-dom-1.4.tar.gz";
 }
 description = {
   summary = "DOM DSL and serialization";
