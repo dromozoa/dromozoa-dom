@@ -81,5 +81,8 @@ local doc = xml_document(_"svg" {
     ["marker-end"] = "url(#triangle)";
   };
 })
-doc:serialize(io.stdout)
-io.write "\n"
+
+local out = assert(io.open("test.svg", "w"))
+doc:serialize(out)
+out:write "\n"
+out:close()

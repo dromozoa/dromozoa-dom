@@ -27,3 +27,5 @@ do
     *) "$@" "$i";;
   esac
 done
+
+rm -f test.html test.svg test.xml
