@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -43,7 +43,7 @@ div[#div + 1] = _"span" { "qux" }
 assert(not pcall(function () div["invalid name"] = 42 end))
 
 serialize_html5(io.stdout, root)
-io.write("\n")
+io.write "\n"
 
 serialize_xml(io.stdout, root)
-io.write("\n")
+io.write "\n"

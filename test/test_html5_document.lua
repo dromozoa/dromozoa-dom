@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -33,4 +33,4 @@ local doc = html5_document(_"html" {
 })
 
 doc:serialize(io.stdout)
-io.write("\n")
+io.write "\n"

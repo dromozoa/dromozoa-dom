@@ -56,4 +56,4 @@ local doc = xml_document(_"svg" {
   };
 })
 doc:serialize(io.stdout)
-io.write("\n")
+io.write "\n"
