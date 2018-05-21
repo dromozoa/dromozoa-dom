@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>実装メモ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>dromozoa-dom</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
 </head>
 <style>
-table {
-  border-collapse: collapse;
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
 }
-th, td {
-  border: 1px solid;
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
 }
 </style>
 <body>
+<div class="markdown-body">
 
-<h1>実装メモ</h1>
+<h1>dromozoa-dom</h1>
 
 <h2>リンク</h2>
 
@@ -86,13 +94,6 @@ MicroXMLのnameStartChar, nameCharは名前空間を取りのぞくために":"�
 このほかに、nonCharacterCodePointの除外によっていくつかのコードポイントを除外している。
 </div>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  CommonHTML: {
-    undefinedFamily: "sans-serif"
-  }
-});
-</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</div>
 </body>
 </html>
