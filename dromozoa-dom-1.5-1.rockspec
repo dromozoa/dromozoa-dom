@@ -1,3 +1,4 @@
+rockspec_format = "3.0"
 package = "dromozoa-dom"
 version = "1.5-1"
 source = {
@@ -12,6 +13,10 @@ description = {
 }
 dependencies = {
   "dromozoa-utf8";
+}
+test = {
+  type = "command";
+  command = "./test.sh";
 }
 build = {
   type = "builtin";
