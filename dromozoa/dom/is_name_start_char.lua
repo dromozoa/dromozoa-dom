@@ -1,66 +1,118 @@
 return function (c)
   c = c + 0
-  if c < 895 then
-    if c < 192 then
-      if c < 95 then
-        if c < 65 then
+  if c < 131070 then
+    if c < 894 then
+      if c < 123 then
+        if c < 91 then
           if c < 59 then
             return c >= 58
           else
-            return false
+            return c >= 65
           end
         else
-          return c < 91
+          if c < 96 then
+            return c >= 95
+          else
+            return c >= 97
+          end
         end
       else
-        if c < 97 then
-          return c < 96
+        if c < 247 then
+          if c < 215 then
+            return c >= 192
+          else
+            return c >= 216
+          end
         else
-          return c < 123
+          if c < 768 then
+            return c >= 248
+          else
+            return c >= 880
+          end
         end
       end
     else
-      if c < 248 then
-        if c < 216 then
-          return c < 215
+      if c < 12272 then
+        if c < 8206 then
+          if c < 8192 then
+            return c >= 895
+          else
+            return c >= 8204
+          end
         else
-          return c < 247
+          if c < 8592 then
+            return c >= 8304
+          else
+            return c >= 11264
+          end
         end
       else
-        if c < 880 then
-          return c < 768
+        if c < 64976 then
+          if c < 55296 then
+            return c >= 12289
+          else
+            return c >= 63744
+          end
         else
-          return c < 894
+          if c < 65534 then
+            return c >= 65008
+          else
+            return c >= 65536
+          end
         end
       end
     end
   else
-    if c < 12289 then
-      if c < 8304 then
-        if c < 8204 then
-          return c < 8192
+    if c < 655358 then
+      if c < 393214 then
+        if c < 262142 then
+          if c < 196606 then
+            return c >= 131072
+          else
+            return c >= 196608
+          end
         else
-          return c < 8206
+          if c < 327678 then
+            return c >= 262144
+          else
+            return c >= 327680
+          end
         end
       else
-        if c < 11264 then
-          return c < 8592
+        if c < 524286 then
+          if c < 458750 then
+            return c >= 393216
+          else
+            return c >= 458752
+          end
         else
-          return c < 12272
+          if c < 589822 then
+            return c >= 524288
+          else
+            return c >= 589824
+          end
         end
       end
     else
-      if c < 65008 then
-        if c < 63744 then
-          return c < 55296
+      if c < 851968 then
+        if c < 786430 then
+          if c < 720894 then
+            return c >= 655360
+          else
+            return c >= 720896
+          end
         else
-          return c < 64976
+          if c < 851966 then
+            return c >= 786432
+          else
+            return false
+          end
         end
       else
-        if c < 65536 then
-          return c < 65534
+        if c < 917504 then
+          return c < 917502
         else
-          return c < 983040
+          return c < 983038
         end
       end
     end
