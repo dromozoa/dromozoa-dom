@@ -43,25 +43,32 @@
       <li><a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#names">Names</a></li>
     </ul>
   </li>
-  <li>HTML5
+  <li><a href="https://www.w3.org/TR/html5/">HTML5</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html5/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html5/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html5/syntax.html#void-elements">Void elements</a></li>
     </ul>
   </li>
-  <li>HTML5.1
+  <li><a href="https://www.w3.org/TR/html51/">HTML 5.1</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html51/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html51/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html51/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html51/syntax.html#void-elements">Void elements</a></li>
     </ul>
   </li>
-  <li>HTML5.2
+  <li><a href="https://www.w3.org/TR/html52/">HTML 5.2</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html52/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html52/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html52/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html52/syntax.html#void-elements">Void elements</a></li>
+    </ul>
+  </li>
+  <li><a href="https://html.spec.whatwg.org/">HTML Living Standard</a>
+    <ul>
+      <li><a href="https://html.spec.whatwg.org/#boolean-attributes">boolean attributes</a></li>
+      <li><a href="https://html.spec.whatwg.org/#escapingString">Escaping a string</a></li>
+      <li><a href="https://html.spec.whatwg.org/#void-elements">Void elements</a></li>
     </ul>
   </li>
   <li>DOM Parsing
@@ -88,11 +95,46 @@
 
 <h2>Names and Tokens</h2>
 
-<div>
+<p>
 XML 1.0とXML 1.1のNameStartChar, NameCharは等しい。
 MicroXMLのnameStartChar, nameCharは名前空間を取りのぞくために":"を持たない。
-このほかに、nonCharacterCodePointの除外によっていくつかのコードポイントを除外している。
-</div>
+このほかに、MicroXMLは<a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#characters">nonCharacterCodePoint</a>の除外によっていくつかのコードポイントを除外している。
+この除外については、<a href="https://www.w3.org/TR/2006/REC-xml11-20060816/#char32">Character Range</a>のNoteも参照する。
+</p>
+
+<p>
+HTML5ではタグ名 (<a href="https://html.spec.whatwg.org/#syntax-tag-name">tag name</a>) はASCII alphanumericと定義される。
+属性名 (<a href="https://html.spec.whatwg.org/#syntax-attribute-name">attribute name</a>) は下記以外の文字と定義される。
+</p>
+
+<ul>
+  <li><a href="https://infra.spec.whatwg.org/#control">controls</a>
+    <ul>
+      <li><a href="https://infra.spec.whatwg.org/#c0-control">C0 control</a>
+        <ul>
+          <li>U+0000 NULLからU+001F INFORMATION SEPARATOR ONEの範囲</li>
+        </ul>
+      </li>
+      <li>U+007F DELETEからU+009F APPLICATION PROGRAM COMMANDの範囲</li>
+    </ul>
+  </li>
+  <li>U+0020 SPACE</li>
+  <li>U+0022 (")</li>
+  <li>U+0027 (')</li>
+  <li>U+003E (&gt;)</li>
+  <li>U+002F (/)</li>
+  <li>U+003D (=)</li>
+  <li><a href="https://infra.spec.whatwg.org/#noncharacter">noncharacters</a>
+    <ul>
+      <li>U+FDD0からU+FDEFの範囲</li>
+      <li>U+?FFFEとU+?FFFF（?は0x00から0x10）</li>
+    </ul>
+  </li>
+</ul>
+
+
+
+
 
 </div>
 </body>
