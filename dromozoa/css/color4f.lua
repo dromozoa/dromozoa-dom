@@ -17,6 +17,7 @@
 
 local color4 = require "dromozoa.vecmath.color4"
 
+-- a:to_string()
 local function to_string(a)
   local x = a[1]
   local y = a[2]
@@ -49,6 +50,24 @@ local function to_string(a)
   end
 end
 
+local function check_component(v, k)
+  local t = type(v)
+  if t ~= "number" then
+    if t == "string" then
+      v = tonumber(v)
+      if not v then
+        error("bad component " .. k .. " (number expected, got " .. t .. ")")
+      end
+    else
+      error("bad component " .. k .. " (number expected, got " .. t .. ")")
+    end
+  end
+  if v < 0 or 1 < v then
+    error("bad component " .. k .. " (out of range)")
+  end
+  return v
+end
+
 local super = color4
 local class = {
   is_color4f = true;
@@ -59,6 +78,33 @@ local metatable = {
   __tostring = to_string;
   ["dromozoa.dom.is_serializable"] = true;
 }
+
+-- a:set(number b, number y, number z, number w)
+-- a:set(number b, number y, number z)
+-- a:set(tuple3 b)
+-- a:set(tuple4 b)
+-- a:set()
+function class.set(a, b, y, z, w)
+  if b then
+    if y then
+      a[1] = check_component(b, "x")
+      a[2] = check_component(y, "y")
+      a[3] = check_component(z, "z")
+      a[4] = check_component(w or 1, "w")
+    else
+      a[1] = check_component(b[1], "x")
+      a[2] = check_component(b[2], "y")
+      a[3] = check_component(b[3], "z")
+      a[4] = check_component(b[4] or 1, "w")
+    end
+  else
+    a[1] = 0
+    a[2] = 0
+    a[3] = 0
+    a[4] = 0
+  end
+  return a
+end
 
 return setmetatable(class, {
   __index = super;
