@@ -32,6 +32,12 @@ assert(tostring(colors.silver) == "#C0C0C0")
 assert(tostring(colors.transparent) == "rgba(0,0,0,0)")
 -- assert(tostring(color4f(1, 0, 0, 0.5):interpolate(colors.lime, 0.5)) == "rgba(50%,50%,0%,0.75)")
 
+local result, message = pcall(color4b, 255, 256, 0)
+if verbose then
+  print(message)
+end
+assert(not result)
+
 local result, message = pcall(color4f, 1, 0, 42)
 if verbose then
   print(message)
