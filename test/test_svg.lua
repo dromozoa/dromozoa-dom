@@ -15,25 +15,23 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local comma_separated = require "dromozoa.dom.comma_separated"
-local element = require "dromozoa.dom.element"
-local space_separated = require "dromozoa.dom.space_separated"
-local xml_document = require "dromozoa.dom.xml_document"
+local dom = require "dromozoa.dom"
+
 local color4d = require "dromozoa.css.color4d"
 local path_data = require "dromozoa.svg.path_data"
 
-local _ = element
+local _ = dom.element
 
 local s = 1 / math.sqrt(10)
 local c = color4d(1, 0, 0, 0.25)
 
-local doc = xml_document(_"svg" {
+local doc = dom.xml_document(_"svg" {
   version = "1.1";
   xmlns = "http://www.w3.org/2000/svg";
   _"defs" {
     _"marker" {
       id = "triangle";
-      viewBox = space_separated { 0, 0, 2, 2 };
+      viewBox = dom.space_separated { 0, 0, 2, 2 };
       refX = 0;
       refY = 1;
       markerWidth = 3;
