@@ -15,17 +15,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local color4d = require "dromozoa.css.color4d"
+local color4 = require "dromozoa.vecmath.color4"
 
+local super = color4
 local class = {}
 local metatable = {
   __index = class;
   ["dromozoa.dom.is_serializable"] = true;
 }
-
-function class:normalize()
-  return color4d(self[1] / 255, self[2] / 255, self[3] / 255, self[4] / 255)
-end
 
 function metatable:__tostring()
   local r = self[1]

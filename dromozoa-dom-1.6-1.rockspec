@@ -13,6 +13,7 @@ description = {
 }
 dependencies = {
   "dromozoa-utf8";
+  "dromozoa-vecmath";
 }
 test = {
   type = "command";

@@ -15,25 +15,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
+local color4 = require "dromozoa.vecmath.color4"
+
+local super = color4
 local class = {}
 local metatable = {
   __index = class;
   ["dromozoa.dom.is_serializable"] = true;
 }
-
-function class:normalize()
-  return self
-end
-
-function class:interpolate(that, alpha)
-  that = that:normalize()
-  local beta = 1 - alpha
-  return class(
-      beta * self[1] + alpha * that[1],
-      beta * self[2] + alpha * that[2],
-      beta * self[3] + alpha * that[3],
-      beta * self[4] + alpha * that[4])
-end
 
 function metatable:__tostring()
   local r = self[1] * 255
@@ -63,29 +52,8 @@ function metatable:__tostring()
 end
 
 return setmetatable(class, {
-  __call = function (_, r, g, b, a)
-    if a == nil then
-      a = 1
-    end
-    local self = { r, g, b, a }
-    for i = 1, 4 do
-      local v = self[i]
-      local t = type(v)
-      if t ~= "number" then
-        if t == "string" then
-          v = tonumber(v)
-          if not v then
-            error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
-          end
-        else
-          error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
-        end
-      end
-      if v < 0 or 1 < v then
-        error("bad argument #" .. i .. " (out of range)")
-      end
-      self[i] = v
-    end
-    return setmetatable(self, metatable)
+  __index = super;
+  __call = function (_, ...)
+    return setmetatable(class.set({}, ...), metatable)
   end;
 })
