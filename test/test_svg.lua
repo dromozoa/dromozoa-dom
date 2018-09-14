@@ -17,7 +17,7 @@
 
 local dom = require "dromozoa.dom"
 
-local color4f = require "dromozoa.css.color4f"
+local color4f = require "dromozoa.vecmath.color4f"
 local path_data = require "dromozoa.svg.path_data"
 
 local _ = dom.element
