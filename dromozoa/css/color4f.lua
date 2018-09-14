@@ -17,6 +17,24 @@
 
 local color4 = require "dromozoa.vecmath.color4"
 
+local function check_component(v, k)
+  local t = type(v)
+  if t ~= "number" then
+    if t == "string" then
+      v = tonumber(v)
+      if not v then
+        error("bad component " .. k .. " (number expected, got " .. t .. ")")
+      end
+    else
+      error("bad component " .. k .. " (number expected, got " .. t .. ")")
+    end
+  end
+  if v < 0 or 1 < v then
+    error("bad component " .. k .. " (out of range)")
+  end
+  return v
+end
+
 -- a:to_string()
 local function to_string(a)
   local x = a[1]
@@ -50,23 +68,15 @@ local function to_string(a)
   end
 end
 
-local function check_component(v, k)
-  local t = type(v)
-  if t ~= "number" then
-    if t == "string" then
-      v = tonumber(v)
-      if not v then
-        error("bad component " .. k .. " (number expected, got " .. t .. ")")
-      end
-    else
-      error("bad component " .. k .. " (number expected, got " .. t .. ")")
-    end
-  end
-  if v < 0 or 1 < v then
-    error("bad component " .. k .. " (out of range)")
-  end
-  return v
+-- a:set_color4b(color4b b)
+local function set_color4b(a, b)
+  a[1] = b[1] / 255
+  a[2] = b[2] / 255
+  a[3] = b[3] / 255
+  a[4] = b[4] / 255
+  return a
 end
+
 
 local super = color4
 local class = {
@@ -81,8 +91,9 @@ local metatable = {
 
 -- a:set(number b, number y, number z, number w)
 -- a:set(number b, number y, number z)
--- a:set(tuple3 b)
+-- a:set(color4b b)
 -- a:set(tuple4 b)
+-- a:set(tuple3 b)
 -- a:set()
 function class.set(a, b, y, z, w)
   if b then
@@ -91,19 +102,38 @@ function class.set(a, b, y, z, w)
       a[2] = check_component(y, "y")
       a[3] = check_component(z, "z")
       a[4] = check_component(w or 1, "w")
+      return a
     else
-      a[1] = check_component(b[1], "x")
-      a[2] = check_component(b[2], "y")
-      a[3] = check_component(b[3], "z")
-      a[4] = check_component(b[4] or 1, "w")
+      if b.is_color4b then
+        return set_color4b(a, b)
+      else
+        a[1] = check_component(b[1], "x")
+        a[2] = check_component(b[2], "y")
+        a[3] = check_component(b[3], "z")
+        a[4] = check_component(b[4] or 1, "w")
+        return a
+      end
     end
   else
     a[1] = 0
     a[2] = 0
     a[3] = 0
     a[4] = 0
+    return a
   end
-  return a
+end
+
+function metatable.__index(a, key)
+  local value = class[key]
+  if value then
+    return value
+  else
+    return rawget(a, class.index[key])
+  end
+end
+
+function metatable.__newindex(a, key, value)
+  rawset(a, class.index[key], value)
 end
 
 return setmetatable(class, {

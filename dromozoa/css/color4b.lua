@@ -17,24 +17,6 @@
 
 local color4 = require "dromozoa.vecmath.color4"
 
--- a:to_string()
-local function to_string(a)
-  local x = a[1]
-  local y = a[2]
-  local z = a[3]
-  local w = a[4]
-
-  if w == 255 then
-    if x % 17 == 0 and y % 17 == 0 and z % 17 == 0 then
-      return ("#%01X%01X%01X"):format(x / 17, y / 17, z / 17)
-    else
-      return ("#%02X%02X%02X"):format(x, y, z)
-    end
-  else
-    return ("rgba(%d,%d,%d,%.17g)"):format(x, y, z, w / 255)
-  end
-end
-
 local function check_component(v, k)
   local t = type(v)
   if t ~= "number" then
@@ -61,10 +43,41 @@ local function check_integer_component(v, k)
   return v
 end
 
+-- a:to_string()
+local function to_string(a)
+  local x = a[1]
+  local y = a[2]
+  local z = a[3]
+  local w = a[4]
+
+  if w == 255 then
+    if x % 17 == 0 and y % 17 == 0 and z % 17 == 0 then
+      return ("#%01X%01X%01X"):format(x / 17, y / 17, z / 17)
+    else
+      return ("#%02X%02X%02X"):format(x, y, z)
+    end
+  else
+    return ("rgba(%d,%d,%d,%.17g)"):format(x, y, z, w / 255)
+  end
+end
+
+-- a:set_color4f(color4f b)
+local function set_color4f(a, b)
+  local x = b[1] * 255
+  local y = b[2] * 255
+  local z = b[3] * 255
+  a[1] = x - x % 1
+  a[2] = y - y % 1
+  a[3] = z - z % 1
+  a[4] = b[4] * 255
+  return a
+end
+
 local super = color4
 local class = {
   is_color4b = true;
   to_string = to_string;
+  set_color4f = set_color4f;
 }
 local metatable = {
   __index = class;
@@ -74,8 +87,9 @@ local metatable = {
 
 -- a:set(number b, number y, number z, number w)
 -- a:set(number b, number y, number z)
--- a:set(tuple3 b)
+-- a:set(color4f b)
 -- a:set(tuple4 b)
+-- a:set(tuple3 b)
 -- a:set()
 function class.set(a, b, y, z, w)
   if b then
@@ -84,19 +98,39 @@ function class.set(a, b, y, z, w)
       a[2] = check_integer_component(y, "y")
       a[3] = check_integer_component(z, "z")
       a[4] = check_component(w or 255, "w")
+      return a
     else
-      a[1] = check_integer_component(b[1], "x")
-      a[2] = check_integer_component(b[2], "y")
-      a[3] = check_integer_component(b[3], "z")
-      a[4] = check_component(b[4] or 255, "w")
+      if b.is_color4f then
+        print "set_color4f"
+        return set_color4f(a, b)
+      else
+        a[1] = check_integer_component(b[1], "x")
+        a[2] = check_integer_component(b[2], "y")
+        a[3] = check_integer_component(b[3], "z")
+        a[4] = check_component(b[4] or 255, "w")
+        return a
+      end
     end
   else
     a[1] = 0
     a[2] = 0
     a[3] = 0
     a[4] = 0
+    return a
   end
-  return a
+end
+
+function metatable.__index(a, key)
+  local value = class[key]
+  if value then
+    return value
+  else
+    return rawget(a, class.index[key])
+  end
+end
+
+function metatable.__newindex(a, key, value)
+  rawset(a, class.index[key], value)
 end
 
 return setmetatable(class, {

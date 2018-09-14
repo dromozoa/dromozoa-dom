@@ -43,3 +43,26 @@ if verbose then
   print(message)
 end
 assert(not result)
+
+local c = color4f(1, 0, 0x33/0xFF)
+assert(c.is_color4f)
+local c = color4b(c)
+assert(c.is_color4b)
+assert(c.x == 0xFF)
+assert(c.y == 0x00)
+assert(c.z == 0x33)
+assert(c.w == 0xFF)
+assert(tostring(c) == "#F03")
+
+local c = color4b(0xFF, 0x00, 0x33, 0xFF)
+assert(c.is_color4b)
+local c = color4f(c)
+assert(c.is_color4f)
+assert(c.x == 1)
+assert(c.y == 0)
+assert(c.z == 0x33/0xFF)
+assert(c.w == 1)
+if verbose then
+  print(tostring(c))
+end
+assert(tostring(c) == "#F03")
