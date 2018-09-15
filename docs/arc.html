@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>dromozoa-dom</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+</head>
+<style>
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+}
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+</style>
+<body>
+<div class="markdown-body">
+
+<h1>楕円</h1>
+
+<h2>リンク</h2>
+
+<ul>
+  <li>SVG 1.1
+    <ul>
+      <li><a href="https://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes">Elliptical arc implementation notes</a></li>
+      <li><a href="https://triple-underscore.github.io/SVG11/implnote.html#ArcImplementationNotes">楕円弧の実装における注意</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>有理ベジェ曲線</h2>
+
+<p>
+有理ベジェ曲線で円弧を表現するとき、
+3次有理ベジェ曲線では180度、
+4次有理ベジェ曲線では240度が上限となる。
+ここでは4次有理ベジェ曲線を利用し、
+180度以上の場合は分割することにする。
+</p>
+
+<h2>楕円弧</h2>
+
+<p>
+SVGの実装ノートには次の楕円の式が記述されている。
+この式は単位円を拡大縮小・回転・移動して楕円を表現している。
+</p>
+
+<p>
+\[
+  \begin{pmatrix}
+    x \\
+    y \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \cos\phi &amp; -\sin\phi \\
+    \sin\phi &amp; \cos\phi \\
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    r_x \cos\theta \\
+    r_y \sin\theta \\
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+\]
+\((c_x, c_y)\)は楕円の中心の座標である。
+\(r_x\)と\(r_y\)は楕円の長半径と短半径である。
+\(\theta\)は現在の座標系の\(x\)軸から楕円の\(x\)軸への角度である。
+拡大縮小と回転を行う前の
+楕円の開始角を\(\theta_1\)、
+楕円の終了角を\(\theta_2\)、
+2角の差を\(\Delta\theta\)とする。
+</p>
+
+<p>
+SVGの実装ノートの式を整理する。
+\[
+  \begin{pmatrix}
+    x \\
+    y \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \cos\phi &amp; -\sin\phi \\
+    \sin\phi &amp;  \cos\phi \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    r_x &amp; 0   \\
+    0   &amp; r_y \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    \cos\theta \\
+    \sin\theta \\
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+\]
+あるいは
+\[
+  \begin{pmatrix}
+    x \\
+    y \\
+    1 \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1 &amp; 0 &amp; c_x \\
+    0 &amp; 1 &amp; c_y \\
+    0 &amp; 0 &amp; 1 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    \cos\phi &amp; -\sin\phi &amp; 0 \\
+    \sin\phi &amp;  \cos\phi &amp; 0 \\
+    0        &amp;  0        &amp; 1 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    r_x &amp; 0   &amp; 0 \\
+    0   &amp; r_y &amp; 0 \\
+    0   &amp; 0   &amp; 1 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    \cos\theta \\
+    \sin\theta \\
+    1 \\
+  \end{pmatrix}
+\]
+2端点\((x_1,y_1),(x_2,y_2)\)と長半径\(r_x\)と短半径\(r_y\)と
+回転\(\phi\)が与えられたときに
+中心\(c_x, c_y\)と\(\theta\)の区間\((\theta_1, \theta_2)\)を求める。
+\[\begin{aligned}
+  \bm{P}_i
+  &amp;=
+  \begin{pmatrix}
+    x_i \\
+    y_i \\
+  \end{pmatrix}
+  \\
+
+  \bm{M}
+  &amp;=
+  \begin{pmatrix}
+    \cos\phi &amp; -\sin\phi \\
+    \sin\phi &amp;  \cos\phi \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    r_x &amp; 0   \\
+    0   &amp; r_y \\
+  \end{pmatrix}
+  \\
+
+  \bm{P}_1 &amp;= \bm{M}
+  \begin{pmatrix}
+    \cos\theta_1 \\
+    \sin\theta_1 \\
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+  \\
+
+  \bm{P}_2 &amp;= \bm{M}
+  \begin{pmatrix}
+    \cos\theta_2 \\
+    \sin\theta_2 \\
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+  \\
+
+  \bm{P}_1 - \bm{M}
+  \begin{pmatrix}
+    \cos\theta_1 \\
+    \sin\theta_1 \\
+  \end{pmatrix}
+  &amp;=
+  \bm{P}_2 - \bm{M}
+  \begin{pmatrix}
+    \cos\theta_2 \\
+    \sin\theta_2 \\
+  \end{pmatrix}
+  \\
+
+  \bm{P}_1 - \bm{P}_2
+  &amp;=
+  \bm{M} \begin{pmatrix}
+    \cos\theta_1 - \cos\theta_2 \\
+    \sin\theta_1 - \sin\theta_2 \\
+  \end{pmatrix}
+  \\
+
+  a &amp;= \frac{\theta_1 + \theta_2}{2} \\
+  b &amp;= \frac{\theta_1 - \theta_2}{2} \\
+
+  \bm{P}_1 - \bm{P}_2
+  &amp;=
+  \bm{M} \begin{pmatrix}
+    -2 \sin a \sin b \\
+     2 \sin b \cos a \\
+  \end{pmatrix}
+  \\
+
+  \begin{pmatrix}
+    \sin a \sin b \\
+    \sin b \cos a \\
+  \end{pmatrix}
+  &amp;=
+  \begin{pmatrix}
+    -\frac{1}{2} &amp; 0 \\
+     0 &amp; \frac{1}{2} \\
+  \end{pmatrix}
+  \bm{M}^{-1}
+  (\bm{P}_1 - \bm{P}_2)
+  \\
+\end{aligned}\]
+</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body);
+});
+</script>
+</div>
+</body>
+</html>
