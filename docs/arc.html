@@ -235,6 +235,61 @@ SVGの実装ノートの式を整理する。
 \end{aligned}\]
 </p>
 
+<p>
+  <svg width="320" height="320">
+    <rect x="0" y="0" width="320" height="320" fill="#CCC"></rect>
+    <g transform="translate(160,160)">
+      <g transform="rotate(20)">
+        <ellipse cx="0" cy="0" rx="160" ry="90" fill="#FCC"></ellipse>
+      </g>
+    </g>
+    <path d="
+      M 274.8167225662447 249.6778691715297
+      A 160 90 20 0 1
+        31.91988745949421 181.1065101713046
+    " fill="none" stroke="#F00"></path>
+  </svg>
+</p>
+
+<pre>
+rx:160;
+ry:90;
+t1:%pi/6; /* 30deg */
+t2:%pi*3/4; /* 135deg */
+p1:matrix([rx*cos(t1),ry*sin(t1),1]);
+p2:matrix([rx*cos(t2),ry*sin(t2),1]);
+float(p1);
+float(p2);
+t:%pi/9;
+cx:160;
+cy:160;
+M:matrix([cos(t),-sin(t),cx],[sin(t),cos(t),cy],[0,0,1]);
+float(M.p1);
+float(M.p2);
+</pre>
+
+<pre>
+M 274.8167225662447 249.6778691715297
+A 160 90 20 0 1
+  31.91988745949421 181.1065101713046
+</pre>
+
+<pre>
+phi:%pi/9;
+rx:160;
+ry:90;
+M:matrix([cos(phi),-sin(phi)],[sin(phi),cos(phi)]).matrix([rx,0],[0,ry]);
+p1:matrix([274.8167225662447],[249.6778691715297]);
+p2:matrix([31.91988745949421],[181.1065101713046]);
+q:float(invert(M).(p1-p2));
+a:float(atan((-q[1][1]/2) / (q[2][1]/2))/%pi*180) /* 82.5deg */
+b:float(asin(-q[1][1]/2/sin(a/180*%pi))/%pi*180) /* -52.5deg */
+t1:%pi/6; /* 30deg */
+t2:%pi*3/4; /* 135deg */
+float(p1-M.matrix([cos(t1)],[sin(t1)]))
+float(p2-M.matrix([cos(t2)],[sin(t2)]))
+</pre>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
 <script>
