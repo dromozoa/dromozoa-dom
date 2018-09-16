@@ -286,9 +286,110 @@ a:float(atan((-q[1][1]/2) / (q[2][1]/2))/%pi*180) /* 82.5deg */
 b:float(asin(-q[1][1]/2/sin(a/180*%pi))/%pi*180) /* -52.5deg */
 t1:%pi/6; /* 30deg */
 t2:%pi*3/4; /* 135deg */
-float(p1-M.matrix([cos(t1)],[sin(t1)]))
-float(p2-M.matrix([cos(t2)],[sin(t2)]))
+float(p1-M.matrix([cos(t1)],[sin(t1)]));
+float(p2-M.matrix([cos(t2)],[sin(t2)]));
+float(asin(sqrt(q[1][1]^2+q[2][1]^2)/2)/%pi*180); /* 52.5deg */
 </pre>
+
+<p>
+\[\begin{aligned}
+  a &amp;= \frac{\theta_1 + \theta_2}{2} \\
+  b &amp;= \frac{\theta_1 - \theta_2}{2} \\
+
+  X
+  &amp;= \cos\theta_1 - \cos\theta_2 \\
+  &amp;= -2 \sin\frac{\theta_1+\theta_2}{2} \sin\frac{\theta_1-\theta_2}{2} \\
+  &amp;= -2 \sin a \sin b \\
+
+  Y
+  &amp;= \sin\theta_1 - \sin\theta_2 \\
+  &amp;= 2 \sin\frac{\theta_1-\theta_2}{2} \cos\frac{\theta_1+\theta_2}{2} \\
+  &amp;= 2 \sin b \cos a \\
+
+  \tan a &amp;= -\frac{X}{Y} \\
+  \sin a &amp;= - \frac{X}{2 \sin b} \\
+  \cos a &amp;= \frac{Y}{2 \sin b} \\
+
+  X^2 + Y^2
+  &amp;= 4 sin^2 a sin^2 b + 4 sin^2 b cos^2 a \\
+  &amp;= 4 sin^2 b \\
+
+  \sin b &amp;= \pm \frac{\sqrt{X^2 + Y^2}}{2} \\
+  \cos b &amp;= \pm \frac{\sqrt{4 - (X^2 + Y^2)}}{2} \\
+
+  \bm{P}_1 + \bm{P}_2
+  &amp;=
+  \bm{M}
+  \begin{pmatrix}
+    \cos\theta_1 + \cos\theta_2 \\
+    \sin\theta_1 + \sin\theta_2 \\
+  \end{pmatrix}
+  +
+  2 \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+  \\
+  &amp;=
+  \bm{M}
+  \begin{pmatrix}
+    2 \cos a \cos b \\
+    2 \sin a \cos b \\
+  \end{pmatrix}
+  +
+  2 \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+  \\
+
+  \begin{pmatrix}
+    c_x \\
+    c_y \\
+  \end{pmatrix}
+  &amp;=
+  \frac{\bm{P}_1 + \bm{P}_2}{2}
+  -
+  \bm{M}
+  \begin{pmatrix}
+    \cos a \cos b \\
+    \sin a \cos b \\
+  \end{pmatrix} \\
+\end{aligned}\]
+</p>
+
+<p>
+<code>A</code>命令は仮引数<code>rx</code>, <code>ry</code>, <code>x-axis-rotation</code>, <code>large-arc-flag</code>, <code>sweep-flag</code>, <code>x</code>, <code>y</code>を持つ。<code>large-arc-flag</code>と<code>sweep-flag</code>が\(a,b\)を特定するために使われる。
+</p>
+
+<ul>
+  <li><code>large-arc-flag</code>が
+    <ul>
+      <li>
+        <code>0</code>のとき、
+        \(|\theta_1 - \theta_2| \lt \pi, \cos b \gt 0\)
+      </li>
+      <li>
+        <code>1</code>のとき、
+        \(|\theta_1 - \theta_2| \ge \pi, \cos b \le 0\)
+      </li>
+    </ul>
+  </li>
+  <li><code>sweep-flag</code>が
+    <ul>
+      <li>
+        <code>0</code>のとき、
+        \(\theta_1 \gt \theta_2, \sin b \lt 0\)
+        （開始点から終了点に向かって反時計回りに楕円弧を描く）
+      </li>
+      <li>
+        <code>1</code>のとき、
+        \(\theta_1 \lt \theta_2, \sin b \gt 0\)
+        （開始点から終了点に向かって時計回りに楕円弧を描く）
+      </li>
+    </ul>
+  </li>
+</ul>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
