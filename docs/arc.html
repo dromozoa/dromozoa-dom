@@ -362,34 +362,43 @@ float(asin(sqrt(q[1][1]^2+q[2][1]^2)/2)/%pi*180); /* 52.5deg */
 <code>A</code>命令は仮引数<code>rx</code>, <code>ry</code>, <code>x-axis-rotation</code>, <code>large-arc-flag</code>, <code>sweep-flag</code>, <code>x</code>, <code>y</code>を持つ。<code>large-arc-flag</code>と<code>sweep-flag</code>が\(a,b\)を特定するために使われる。
 </p>
 
-<ul>
-  <li><code>large-arc-flag</code>が
-    <ul>
-      <li>
-        <code>0</code>のとき、
-        \(|\theta_1 - \theta_2| \lt \pi, \cos b \gt 0\)
-      </li>
-      <li>
-        <code>1</code>のとき、
-        \(|\theta_1 - \theta_2| \ge \pi, \cos b \le 0\)
-      </li>
-    </ul>
-  </li>
-  <li><code>sweep-flag</code>が
-    <ul>
-      <li>
-        <code>0</code>のとき、
-        \(\theta_1 \gt \theta_2, \sin b \lt 0\)
-        （開始点から終了点に向かって反時計回りに楕円弧を描く）
-      </li>
-      <li>
-        <code>1</code>のとき、
-        \(\theta_1 \lt \theta_2, \sin b \gt 0\)
-        （開始点から終了点に向かって時計回りに楕円弧を描く）
-      </li>
-    </ul>
-  </li>
-</ul>
+<table>
+  <tr>
+    <th><code>large-arc-flag</code></th>
+    <th><code>sweep-flag</code></th>
+    <th>\(\sin b\)</th>
+    <th>\(\cos b\)</th>
+    <th>説明</th>
+  </tr>
+  <tr>
+    <td><code>0</code></td>
+    <td><code>0</code></td>
+    <td>正</td>
+    <td>正</td>
+    <td>短いほうの弧が選択される。始点から終点は反時計回り。</td>
+  </tr>
+  <tr>
+    <td><code>0</code></td>
+    <td><code>1</code></td>
+    <td>負</td>
+    <td>正</td>
+    <td>短いほうの弧が選択される。始点から終点は時計回り。</td>
+  </tr>
+  <tr>
+    <td><code>1</code></td>
+    <td><code>0</code></td>
+    <td>正</td>
+    <td>負</td>
+    <td>長いほうの弧が選択される。始点から終点は反時計回り。</td>
+  </tr>
+  <tr>
+    <td><code>1</code></td>
+    <td><code>1</code></td>
+    <td>負</td>
+    <td>負</td>
+    <td>長いほうの弧が選択される。始点から終点は時計回り。</td>
+  </tr>
+</table>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"></script>
