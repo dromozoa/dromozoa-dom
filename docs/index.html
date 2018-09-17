@@ -43,25 +43,32 @@
       <li><a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#names">Names</a></li>
     </ul>
   </li>
-  <li>HTML5
+  <li><a href="https://www.w3.org/TR/html5/">HTML5</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html5/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html5/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html5/syntax.html#void-elements">Void elements</a></li>
     </ul>
   </li>
-  <li>HTML5.1
+  <li><a href="https://www.w3.org/TR/html51/">HTML 5.1</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html51/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html51/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html51/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html51/syntax.html#void-elements">Void elements</a></li>
     </ul>
   </li>
-  <li>HTML5.2
+  <li><a href="https://www.w3.org/TR/html52/">HTML 5.2</a>
     <ul>
       <li><a href="https://www.w3.org/TR/html52/infrastructure.html#boolean-attribute">boolean attributes</a></li>
-      <li><a href="https://www.w3.org/TR/html52/syntax.html#escaping-a-string">Escape a string</a></li>
+      <li><a href="https://www.w3.org/TR/html52/syntax.html#escaping-a-string">Escaping a string</a></li>
       <li><a href="https://www.w3.org/TR/html52/syntax.html#void-elements">Void elements</a></li>
+    </ul>
+  </li>
+  <li><a href="https://html.spec.whatwg.org/">HTML Living Standard</a>
+    <ul>
+      <li><a href="https://html.spec.whatwg.org/#boolean-attributes">boolean attributes</a></li>
+      <li><a href="https://html.spec.whatwg.org/#escapingString">Escaping a string</a></li>
+      <li><a href="https://html.spec.whatwg.org/#void-elements">Void elements</a></li>
     </ul>
   </li>
   <li>DOM Parsing
@@ -81,18 +88,79 @@
   <li>CSS
     <ul>
       <li><a href="https://www.w3.org/Style/CSS/">Cascading Style Sheets home page</a></li>
-      <li><a href="https://www.w3.org/TR/2017/CR-css-color-3-20171205/">CSS Color Module Level 3</a></li>
+      <li><a href="https://www.w3.org/TR/css-color-3/">CSS Color Module Level 3</a></li>
     </ul>
   </li>
 </ul>
 
+<h2>ドキュメント</h2>
+
+<ul>
+  <li><a href="arc.html">楕円</a></li>
+</ul>
+
 <h2>Names and Tokens</h2>
 
-<div>
+<p>
 XML 1.0とXML 1.1のNameStartChar, NameCharは等しい。
 MicroXMLのnameStartChar, nameCharは名前空間を取りのぞくために":"を持たない。
-このほかに、nonCharacterCodePointの除外によっていくつかのコードポイントを除外している。
-</div>
+このほかに、MicroXMLは<a href="https://dvcs.w3.org/hg/microxml/raw-file/tip/spec/microxml.html#characters">nonCharacterCodePoint</a>の除外によっていくつかのコードポイントを除外している。
+この除外については、<a href="https://www.w3.org/TR/2006/REC-xml11-20060816/#char32">Character Range</a>のNoteも参照する。
+</p>
+
+<p>
+HTML5ではタグ名 (<a href="https://html.spec.whatwg.org/#syntax-tag-name">tag name</a>) はASCII alphanumericと定義される。
+属性名 (<a href="https://html.spec.whatwg.org/#syntax-attribute-name">attribute name</a>) は下記以外の文字と定義される。
+</p>
+
+<ul>
+  <li><a href="https://infra.spec.whatwg.org/#control">controls</a>
+    <ul>
+      <li><a href="https://infra.spec.whatwg.org/#c0-control">C0 control</a>
+        <ul>
+          <li>U+0000 NULLからU+001F INFORMATION SEPARATOR ONEの範囲</li>
+        </ul>
+      </li>
+      <li>U+007F DELETEからU+009F APPLICATION PROGRAM COMMANDの範囲</li>
+    </ul>
+  </li>
+  <li>U+0020 SPACE</li>
+  <li>U+0022 (")</li>
+  <li>U+0027 (')</li>
+  <li>U+003E (&gt;)</li>
+  <li>U+002F (/)</li>
+  <li>U+003D (=)</li>
+  <li><a href="https://infra.spec.whatwg.org/#noncharacter">noncharacters</a>
+    <ul>
+      <li>U+FDD0からU+FDEFの範囲</li>
+      <li>U+?FFFEとU+?FFFF（?は0x00から0x10）</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>SVGパスセグメント</h2>
+
+<table>
+  <tr><td>Z or z</td><td>closepath</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegClosePath">SVGPathSegClosePath</a></td></tr>
+  <tr><td>M</td><td>absolute moveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegMovetoAbs">SVGPathSegMovetoAbs</a></td></tr>
+  <tr><td>m</td><td>relative moveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegMovetoRel">SVGPathSegMovetoRel</a></td></tr>
+  <tr><td>L</td><td>absolute lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoAbs">SVGPathSegLinetoAbs</a></td></tr>
+  <tr><td>l</td><td>relative lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoRel">SVGPathSegLinetoRel</a></td></tr>
+  <tr><td>C</td><td>absolute cubic B&eacute;zier curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoCubicAbs">SVGPathSegCurvetoCubicAbs</a></td></tr>
+  <tr><td>c</td><td>relative cubic B&eacute;zier curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoCubicRel">SVGPathSegCurvetoCubicRel</a></td></tr>
+  <tr><td>Q</td><td>absolute quadratic B&eacute;zier curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoQuadraticAbs">SVGPathSegCurvetoQuadraticAbs</a></td></tr>
+  <tr><td>q</td><td>relative quadratic B&eacute;zier curveto"</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoQuadraticRel">SVGPathSegCurvetoQuadraticRel</a></td></tr>
+  <tr><td>A</td><td>absolute arcto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegArcAbs">SVGPathSegArcAbs</a></td></tr>
+  <tr><td>a</td><td>relative arcto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegArcRel">SVGPathSegArcRel</a></td></tr>
+  <tr><td>H</td><td>absolute horizontal lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoHorizontalAbs">SVGPathSegLinetoHorizontalAbs</a></td></tr>
+  <tr><td>h</td><td>relative horizontal lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoHorizontalRel">SVGPathSegLinetoHorizontalRel</a></td></tr>
+  <tr><td>V</td><td>absolute vertical lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoVerticalAbs">SVGPathSegLinetoVerticalAbs</a></td></tr>
+  <tr><td>v</td><td>relative vertical lineto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegLinetoVerticalRel">SVGPathSegLinetoVerticalRel</a></td></tr>
+  <tr><td>S</td><td>absolute smooth cubic curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoCubicSmoothAbs">SVGPathSegCurvetoCubicSmoothAbs</a></td></tr>
+  <tr><td>s</td><td>relative smooth cubic curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoCubicSmoothRel">SVGPathSegCurvetoCubicSmoothRel</a></td></tr>
+  <tr><td>T</td><td>absolute smooth cubic curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoQuadraticSmoothAbs">SVGPathSegCurvetoQuadraticSmoothAbs</a></td></tr>
+  <tr><td>t</td><td>relative smooth cubic curveto</td><td><a href="https://www.w3.org/TR/SVG11/paths.html#InterfaceSVGPathSegCurvetoQuadraticSmoothRel">SVGPathSegCurvetoQuadraticSmoothRel</a></td></tr>
+</table>
 
 </div>
 </body>
