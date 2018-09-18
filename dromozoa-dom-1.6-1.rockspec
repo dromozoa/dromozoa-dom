@@ -22,9 +22,6 @@ test = {
 build = {
   type = "builtin";
   modules = {
-    ["dromozoa.css.color4b"] = "dromozoa/css/color4b.lua";
-    ["dromozoa.css.color4d"] = "dromozoa/css/color4d.lua";
-    ["dromozoa.css.colors"] = "dromozoa/css/colors.lua";
     ["dromozoa.dom"] = "dromozoa/dom.lua";
     ["dromozoa.dom.check_name"] = "dromozoa/dom/check_name.lua";
     ["dromozoa.dom.comma_separated"] = "dromozoa/dom/comma_separated.lua";
@@ -38,6 +35,5 @@ build = {
     ["dromozoa.dom.serialize_xml"] = "dromozoa/dom/serialize_xml.lua";
     ["dromozoa.dom.space_separated"] = "dromozoa/dom/space_separated.lua";
     ["dromozoa.dom.xml_document"] = "dromozoa/dom/xml_document.lua";
-    ["dromozoa.svg.path_data"] = "dromozoa/svg/path_data.lua";
   };
 }
