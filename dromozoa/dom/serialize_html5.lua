@@ -35,6 +35,7 @@ local void_elements = {
   input = true;
   keygen = true; -- removed from HTML 5.2
   link = true;
+  menuitem = true; -- removed from HTML 5.2
   meta = true;
   param = true;
   source = true;

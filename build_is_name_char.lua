@@ -17,8 +17,6 @@
 
 local builder = require "dromozoa.ucd.builder"
 
-local unpack = table.unpack or unpack
-
 local name_start_char = [[
 ":"
 [A-Z]
@@ -35,7 +33,20 @@ local name_start_char = [[
 [#x3001-#xD7FF]
 [#xF900-#xFDCF]
 [#xFDF0-#xFFFD]
-[#x10000-#xEFFFF]
+[#x10000-#x1FFFD]
+[#x20000-#x2FFFD]
+[#x30000-#x3FFFD]
+[#x40000-#x4FFFD]
+[#x50000-#x5FFFD]
+[#x60000-#x6FFFD]
+[#x70000-#x7FFFD]
+[#x80000-#x8FFFD]
+[#x90000-#x9FFFD]
+[#xA0000-#xAFFFD]
+[#xB0000-#xBFFFD]
+[#xC0000-#xCFFFD]
+[#xD0000-#xDFFFD]
+[#xE0000-#xEFFFD]
 ]]
 
 local name_char = name_start_char .. [[

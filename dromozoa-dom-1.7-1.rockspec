@@ -1,9 +1,9 @@
 rockspec_format = "3.0"
 package = "dromozoa-dom"
-version = "1.6-1"
+version = "1.7-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.6.tar.gz";
-  file = "dromozoa-dom-1.6.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.7.tar.gz";
+  file = "dromozoa-dom-1.7.tar.gz";
 }
 description = {
   summary = "DOM DSL and serialization";
@@ -21,9 +21,7 @@ test = {
 build = {
   type = "builtin";
   modules = {
-    ["dromozoa.css.color4b"] = "dromozoa/css/color4b.lua";
-    ["dromozoa.css.color4d"] = "dromozoa/css/color4d.lua";
-    ["dromozoa.css.colors"] = "dromozoa/css/colors.lua";
+    ["dromozoa.dom"] = "dromozoa/dom.lua";
     ["dromozoa.dom.check_name"] = "dromozoa/dom/check_name.lua";
     ["dromozoa.dom.comma_separated"] = "dromozoa/dom/comma_separated.lua";
     ["dromozoa.dom.document"] = "dromozoa/dom/document.lua";
@@ -36,6 +34,5 @@ build = {
     ["dromozoa.dom.serialize_xml"] = "dromozoa/dom/serialize_xml.lua";
     ["dromozoa.dom.space_separated"] = "dromozoa/dom/space_separated.lua";
     ["dromozoa.dom.xml_document"] = "dromozoa/dom/xml_document.lua";
-    ["dromozoa.svg.path_data"] = "dromozoa/svg/path_data.lua";
   };
 }
