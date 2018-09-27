@@ -24,9 +24,6 @@ doc.doctype = {
   name = "greeting";
   system_id = "hello.dtd";
 }
-doc.stylesheet = {
-  href = "no <\"> such file.xsl";
-}
 doc.stylesheets = {
   { href = "common.css" };
   { href = "default.css", title = "Default style" };

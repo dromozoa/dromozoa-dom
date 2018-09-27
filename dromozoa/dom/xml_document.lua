@@ -24,18 +24,12 @@ local metatable = { __index = class }
 
 function class:serialize(out)
   out:write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-
-  local stylesheet = self.stylesheet
-  if stylesheet then
-    serialize_xml(out, stylesheet, true)
-  end
   local stylesheets = self.stylesheets
   if stylesheets then
     for i = 1, #stylesheets do
       serialize_xml(out, stylesheets[i], true)
     end
   end
-
   self:serialize_doctype(out)
   serialize_xml(out, self[1])
 end
