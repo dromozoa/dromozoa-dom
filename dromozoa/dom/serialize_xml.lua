@@ -22,13 +22,13 @@ local escape_table = {
   [">"] = "&gt;";
 }
 
-local function serialize_xml(out, u)
+local function serialize_xml(out, u, is_xml_stylesheet)
   local name = u[0]
 
   local keys = {}
   local n = 0
   local m = 0
-  for k, v in pairs(u) do
+  for k in pairs(u) do
     local t = type(k)
     if t == "number" then
       if m < k then
@@ -41,7 +41,11 @@ local function serialize_xml(out, u)
   end
   table.sort(keys)
 
-  out:write("<", name)
+  if is_xml_stylesheet then
+    out:write "<?xml-stylesheet"
+  else
+    out:write("<", name)
+  end
   for i = 1, n do
     local k = keys[i]
     local v = u[k]
@@ -62,7 +66,9 @@ local function serialize_xml(out, u)
     end
   end
 
-  if m == 0 then
+  if is_xml_stylesheet then
+    out:write "?>"
+  elseif m == 0 then
     out:write "/>"
   else
     out:write ">"
