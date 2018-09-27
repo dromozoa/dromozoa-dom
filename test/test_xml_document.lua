@@ -24,6 +24,15 @@ doc.doctype = {
   name = "greeting";
   system_id = "hello.dtd";
 }
+doc.stylesheet = {
+  href = "no <\"> such file.xsl";
+}
+doc.stylesheets = {
+  { href = "common.css" };
+  { href = "default.css", title = "Default style" };
+  { alternate = "yes", href = "alt.css", title = "Alternative style" };
+  { href = "single-col.css", media = "all and (max-width: 30em)" };
+}
 
 local out = assert(io.open("test.xml", "w"))
 doc:serialize(out)
