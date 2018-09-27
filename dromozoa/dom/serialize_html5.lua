@@ -49,7 +49,7 @@ local function serialize_html5(out, u)
   local keys = {}
   local n = 0
   local m = 0
-  for k, v in pairs(u) do
+  for k in pairs(u) do
     local t = type(k)
     if t == "number" then
       if m < k then
