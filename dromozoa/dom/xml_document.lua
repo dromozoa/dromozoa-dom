@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -24,6 +24,12 @@ local metatable = { __index = class }
 
 function class:serialize(out)
   out:write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+  local stylesheets = self.stylesheets
+  if stylesheets then
+    for i = 1, #stylesheets do
+      serialize_xml(out, stylesheets[i], true)
+    end
+  end
   self:serialize_doctype(out)
   serialize_xml(out, self[1])
 end
