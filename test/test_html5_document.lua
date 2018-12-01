@@ -17,6 +17,7 @@
 
 local element = require "dromozoa.dom.element"
 local html5_document = require "dromozoa.dom.html5_document"
+local space_separated = require "dromozoa.dom.space_separated"
 
 local _ = element
 local doc = html5_document(_"html" {
@@ -29,6 +30,10 @@ local doc = html5_document(_"html" {
     _"div" { "本文1" };
     _"div" { "本文2" };
     _"div" { "本文3" };
+    _"div" {
+      class = space_separated { "foo", "bar", "baz" };
+      "本文4";
+    };
   };
 })
 

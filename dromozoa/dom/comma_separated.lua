@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -17,17 +17,13 @@
 
 local serialize_separated = require "dromozoa.dom.serialize_separated"
 
-local class = {}
-local metatable = {
-  __index = class;
-  ["dromozoa.dom.is_serializable"] = true;
-}
+local metatable = { ["dromozoa.dom.is_serializable"] = true }
 
 function metatable:__tostring()
   return serialize_separated(self, ",")
 end
 
-return setmetatable(class, {
+return setmetatable({}, {
   __call = function (_, self)
     return setmetatable(self, metatable)
   end;
