@@ -17,8 +17,7 @@
 
 local check_name = require "dromozoa.dom.check_name"
 
-local class = {}
-local metatable = { __index = class }
+local metatable = {}
 
 function metatable:__newindex(k, v)
   if type(k) == "string" then
@@ -34,7 +33,7 @@ function metatable:__call(t)
   return self
 end
 
-return setmetatable(class, {
+return setmetatable({}, {
   __call = function (_, name)
     return setmetatable({ [0] = check_name(name) }, metatable)
   end;
