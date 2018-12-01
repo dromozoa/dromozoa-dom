@@ -1,4 +1,4 @@
--- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -15,16 +15,20 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local serialize_separated = require "dromozoa.dom.serialize_separated"
+local comma_separated = require "dromozoa.dom.comma_separated"
+local space_separated = require "dromozoa.dom.space_separated"
 
-local metatable = { ["dromozoa.dom.is_serializable"] = true }
+local verbose = os.getenv "VERBOSE" == "1"
 
-function metatable:__tostring()
-  return serialize_separated(self, ",")
+local function check(source, expect)
+  local result = tostring(source)
+  if verbose then
+    print(result)
+  end
+  assert(result == expect)
 end
 
-return setmetatable({}, {
-  __call = function (_, self)
-    return setmetatable(self, metatable)
-  end;
-})
+check(comma_separated {}, "")
+check(comma_separated { 42, "foo" }, "42,foo")
+check(space_separated {}, "")
+check(space_separated { 42, "foo" }, "42 foo")
