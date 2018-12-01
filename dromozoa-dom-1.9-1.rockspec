@@ -1,9 +1,9 @@
 rockspec_format = "3.0"
 package = "dromozoa-dom"
-version = "1.8-1"
+version = "1.9-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.8.tar.gz";
-  file = "dromozoa-dom-1.8.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-dom/archive/v1.9.tar.gz";
+  file = "dromozoa-dom-1.9.tar.gz";
 }
 description = {
   summary = "DOM DSL and serialization";
