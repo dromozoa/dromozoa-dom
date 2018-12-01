@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dom.
 --
@@ -15,26 +15,20 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dom.  If not, see <http://www.gnu.org/licenses/>.
 
-local check_name = require "dromozoa.dom.check_name"
+local comma_separated = require "dromozoa.dom.comma_separated"
+local space_separated = require "dromozoa.dom.space_separated"
 
-local metatable = {}
+local verbose = os.getenv "VERBOSE" == "1"
 
-function metatable:__newindex(k, v)
-  if type(k) == "string" then
-    check_name(k)
+local function check(source, expect)
+  local result = tostring(source)
+  if verbose then
+    print(result)
   end
-  rawset(self, k, v)
+  assert(result == expect)
 end
 
-function metatable:__call(t)
-  for k, v in pairs(t) do
-    self[k] = v
-  end
-  return self
-end
-
-return setmetatable({}, {
-  __call = function (_, name)
-    return setmetatable({ [0] = check_name(name) }, metatable)
-  end;
-})
+check(comma_separated {}, "")
+check(comma_separated { 42, "foo" }, "42,foo")
+check(space_separated {}, "")
+check(space_separated { 42, "foo" }, "42 foo")
